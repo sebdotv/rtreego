@@ -1,6 +1,8 @@
 rtreego
 =======
 
+[![GoDoc](https://godoc.org/github.com/patrick-higgins/rtreego?status.svg)](https://godoc.org/github.com/patrick-higgins/rtreego)
+
 A library for efficiently storing and querying spatial data
 in the Go programming language.
 
