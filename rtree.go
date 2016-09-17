@@ -427,17 +427,17 @@ func (tree *Rtree) condenseTree(n *node) {
 // Implemented per Section 3.1 of "R-trees: A Dynamic Index Structure for
 // Spatial Searching" by A. Guttman, Proceedings of ACM SIGMOD, p. 47-57, 1984.
 func (tree *Rtree) SearchIntersect(bb *Rect) []Spatial {
-	return tree.searchIntersect(tree.root, bb)
+	results := []Spatial{}
+	return tree.searchIntersect(tree.root, bb, results)
 }
 
-func (tree *Rtree) searchIntersect(n *node, bb *Rect) []Spatial {
-	results := []Spatial{}
+func (tree *Rtree) searchIntersect(n *node, bb *Rect, results []Spatial) []Spatial {
 	for _, e := range n.entries {
 		if intersect(e.bb, bb) {
 			if n.leaf {
 				results = append(results, e.obj)
 			} else {
-				results = append(results, tree.searchIntersect(e.child, bb)...)
+				results = tree.searchIntersect(e.child, bb, results)
 			}
 		}
 	}
