@@ -236,16 +236,6 @@ func intersect(r1, r2 *Rect) bool {
 	return true
 }
 
-// contains tests whether rectangle r1 contains rectangle r2.
-func contains(r1, r2 *Rect) bool {
-	for i := 0; i < Dim; i++ {
-		if r2.q[i] < r1.p[i] || r1.q[i] < r2.p[i] {
-			return false
-		}
-	}
-	return true
-}
-
 // ToRect constructs a rectangle containing p with side lengths 2*tol.
 func (p Point) ToRect(tol float64) *Rect {
 	var r Rect

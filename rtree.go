@@ -451,7 +451,7 @@ func (tree *Rtree) searchIntersect(n *node, bb *Rect, results []Spatial) []Spati
 }
 func (tree *Rtree) searchContains(n *node, bb *Rect, results []Spatial) []Spatial {
 	for _, e := range n.entries {
-		if contains(e.bb, bb) {
+		if e.bb.containsRect(bb) {
 			if n.leaf {
 				results = append(results, e.obj)
 			} else {
