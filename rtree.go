@@ -431,6 +431,12 @@ func (tree *Rtree) SearchIntersect(bb *Rect) []Spatial {
 	return tree.searchIntersect(tree.root, bb, results)
 }
 
+// SearchContains returns all objects that contain the specified rectangle.
+func (tree *Rtree) SearchContains(bb *Rect) []Spatial {
+	results := []Spatial{}
+	return tree.searchContains(tree.root, bb, results)
+}
+
 func (tree *Rtree) searchIntersect(n *node, bb *Rect, results []Spatial) []Spatial {
 	for _, e := range n.entries {
 		if intersect(e.bb, bb) {
@@ -438,6 +444,18 @@ func (tree *Rtree) searchIntersect(n *node, bb *Rect, results []Spatial) []Spati
 				results = append(results, e.obj)
 			} else {
 				results = tree.searchIntersect(e.child, bb, results)
+			}
+		}
+	}
+	return results
+}
+func (tree *Rtree) searchContains(n *node, bb *Rect, results []Spatial) []Spatial {
+	for _, e := range n.entries {
+		if contains(e.bb, bb) {
+			if n.leaf {
+				results = append(results, e.obj)
+			} else {
+				results = tree.searchContains(e.child, bb, results)
 			}
 		}
 	}
