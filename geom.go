@@ -117,12 +117,12 @@ func (r *Rect) String() string {
 
 // NewRect constructs and returns a pointer to a Rect given a corner point and
 // the lengths of each dimension.  The point p should be the most-negative point
-// on the rectangle (in every dimension) and every length should be positive.
+// on the rectangle (in every dimension) and every length should be positive or 0.
 func NewRect(p Point, lengths [Dim]float64) (r Rect, err error) {
 	r.p = p
 	r.q = lengths
 	for i, l := range r.q {
-		if l <= 0 {
+		if l < 0 {
 			return r, DistError(l)
 		}
 		r.q[i] += r.p[i]
